@@ -1,0 +1,39 @@
+app_senior:
+    resource: "@AppBundle/Controller/SeniorController.php"
+    type:     annotation
+
+back_client:
+    resource: "@backBundle/Controller/ClientController.php"
+    type:     annotation
+
+back_grille:
+    resource: "@backBundle/Controller/GrilleController.php"
+    type:     annotation
+
+back_dept:
+    resource: "@backBundle/Controller/DeptController.php"
+    type:     annotation
+
+back_bureau:
+    resource: "@backBundle/Controller/BureauController.php"
+    type:     annotation
+
+app_user:
+    resource: "@AppBundle/Controller/UserController.php"
+    type:     annotation
+
+
+back:
+    resource: "@backBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

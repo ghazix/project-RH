@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    <div ng-controller="GreetingController">
+        [[1+2]]=3
+    </div>
+
+{% endblock %}
+{% block javascript  %}
+
+    <script>
+        myAppModule.controller("GreetingController",["scope",function ($scope) {
+
+            $scope.test="angular pret !!";
+        }]);
+    </script>
+
+{% endblock %}

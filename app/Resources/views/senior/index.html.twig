@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Seniors list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for senior in seniors %}
+            <tr>
+                <td><a href="{{ path('Ssenior_show', { 'id': senior.id }) }}">{{ senior.id }}</a></td>
+                <td>{{ senior.nom }}</td>
+                <td>{{ senior.prenom }}</td>
+                <td>{{ senior.username }}</td>
+                <td>{{ senior.email }}</td>
+                <td>{{ senior.password }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('Ssenior_show', { 'id': senior.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('Ssenior_edit', { 'id': senior.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('Ssenior_new') }}">Create a new senior</a>
+        </li>
+    </ul>
+{% endblock %}
