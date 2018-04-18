@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Acce</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ acce.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ acce.description }}</td>
+            </tr>
+            <tr>
+                <th>Path</th>
+                <td>{{ acce.path }}</td>
+            </tr>
+            <tr>
+                <th>Icon</th>
+                <td>{{ acce.icon }}</td>
+            </tr>
+            <tr>
+                <th>Createdat</th>
+                <td>{% if acce.createdAt %}{{ acce.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Updatedat</th>
+                <td>{% if acce.updatedAt %}{{ acce.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Enbale</th>
+                <td>{{ acce.enbale }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('acces_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('acces_edit', { 'id': acce.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

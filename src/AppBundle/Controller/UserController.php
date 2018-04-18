@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * User controller.
@@ -27,9 +29,11 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $users = $em->getRepository('AppBundle:User')->findAll();
+        $roles = $em->getRepository('AppBundle:role_user')->findByEnable(1);
+        $seniors = $em->getRepository('AppBundle:User')->findByRole('ROLE_ADMIN');
 
         return $this->render('user/index.html.twig', array(
-            'users' => $users,
+            'users' => $users,'roles' => $roles,'seniors' =>$seniors
         ));
     }
 
@@ -157,6 +161,82 @@ class UserController extends Controller
             ->setAction($this->generateUrl('seniorManager_user_delete', array('id' => $user->getId())))
             ->setMethod('DELETE')
             ->getForm();
+    }
+    /**
+     * Creates a new centre national entity.
+     * @Route("/user/create", name="user_create")
+     * @Method({"GET", "POST"})
+     */
+
+    public function userAddAction(Request $request)
+    {
+
+        if($request->isXmlHttpRequest())
+        {
+            $em = $this->getDoctrine()->getManager();
+
+
+            $user = new User();
+
+
+            $user->setEnabled(1);
+            // get posted data
+
+            $username =       $request->get('username');
+            $email =         $request->get('email');
+            $password=      $request->get('password');
+            $role=              $request->get('role');
+
+
+
+
+
+
+            $role_id = $em->getRepository('AppBundle:role_user')->findOneById($role);
+
+            if ($role_id->getType() == 2)  {
+                $rolesArr = array('CLIENT');
+                $user->setRoles($rolesArr);
+
+            }
+            if ($role_id->getType() == 1)  {
+                $rolesArr = array('COMPAGNIE');
+                $user->setRoles($rolesArr);
+            }
+
+            if (!$username) {
+                $response = json_encode("username required");
+
+                return new Response($response, 500);
+            }elseif (!$email) {
+                $response = json_encode("email required");
+
+                return new Response($response, 500);
+
+            }else{
+
+                // set center property values
+                $user->setUsername($username);
+                $user->setEmail($email);
+                $user->setPlainPassword($password);
+                $user->setRoleUser($role_id);
+
+
+
+
+                $em->persist($user);
+                $em->flush($user);
+
+                $response = json_encode(array('message'=>'Add user successfully'));
+                return new Response($response, 200);
+            }
+
+        }
+        else{
+            $response = json_encode(array('errorMessage' => 'Add usr no valid'));
+            return new Response($response, 400);
+        }
+
     }
 
 

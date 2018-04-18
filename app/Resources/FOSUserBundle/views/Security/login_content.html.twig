@@ -1,0 +1,53 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<body class=" login">
+<!-- BEGIN LOGO -->
+<div class="logo">
+    <a href="index.html">
+        <!-- <img src="../assets/pages/img/logo-big.png" alt="" /> --></a>
+</div>
+<!-- END LOGO -->
+<!-- BEGIN LOGIN -->
+<div class="content">
+    <!-- BEGIN LOGIN FORM -->
+
+
+
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+
+<form action="{{ path("fos_user_security_check") }}" class="login-form" method="post">
+    <h3 class="form-title font-green">Sign In</h3>
+
+    {% if csrf_token %}
+    <div class="alert alert-danger display-hide">
+        <button class="close" data-close="alert"></button>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+    </div>
+    {% endif %}
+    <div class="form-group">
+
+    <label for="username" class="control-label visible-ie8 visible-ie9">login</label>
+    <input class="form-control form-control-solid placeholder-no-fix" placeholder="Username" type="text" id="username" name="_username" value="{{ last_username }}" autocomplete="off" required="required" />
+    </div>
+    <div class="form-group">
+    <label for="password" class="control-label visible-ie8 visible-ie9">password</label>
+    <input type="password" id="password" name="_password" required="required" placeholder="Password" autocomplete="off" class="form-control form-control-solid placeholder-no-fix" />
+    </div>
+    {#<input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    <label for="remember_me" class="rememberme check mt-checkbox mt-checkbox-outline" >
+        Remember
+    </label>#}
+
+
+    <div class="form-actions">
+
+
+        <button class="btn btn-success uppercase pull-right" type="submit" id="_submit" name="_submit">Login</button>
+    </div>
+
+
+</form>
+</div>
+</body>
+

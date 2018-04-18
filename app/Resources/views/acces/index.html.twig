@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Acces list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Path</th>
+                <th>Icon</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Enbale</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for acce in acces %}
+            <tr>
+                <td><a href="{{ path('acces_show', { 'id': acce.id }) }}">{{ acce.id }}</a></td>
+                <td>{{ acce.description }}</td>
+                <td>{{ acce.path }}</td>
+                <td>{{ acce.icon }}</td>
+                <td>{% if acce.createdAt %}{{ acce.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if acce.updatedAt %}{{ acce.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ acce.enbale }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('acces_show', { 'id': acce.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('acces_edit', { 'id': acce.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('acces_new') }}">Create a new acce</a>
+        </li>
+    </ul>
+{% endblock %}

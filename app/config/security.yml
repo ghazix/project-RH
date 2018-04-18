@@ -34,6 +34,7 @@ security:
         - { path: ^/senior/, role: ROLE_SENIOR }
         - { path: ^/manager/, role: ROLE_MANAGER }
         - { path: ^/assistant/, role: ROLE_ASSISTANT}
+        - { path: ^/, role: ROLE_USER }
 
 
 

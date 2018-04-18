@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 
 class User extends BaseUser
@@ -24,14 +25,14 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="nom", type="string", length=255)
+     * @ORM\Column(name="nom", type="string", length=255, nullable=true)
      */
     private $nom;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="prenom", type="string", length=255)
+     * @ORM\Column(name="prenom", type="string", length=255, nullable=true)
      */
     private $prenom;
 
@@ -114,6 +115,13 @@ class User extends BaseUser
      * @ORM\Column(name="etat", type="integer", nullable=true)
      */
     private $etat;
+
+    /**
+     * Many User have One Role.
+     * @ORM\ManyToOne(targetEntity="role_user", inversedBy="user")
+     * @ORM\JoinColumn(name="role_user_id", referencedColumnName="id")
+     */
+    private $role_user;
 
 
     /**

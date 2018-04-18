@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Role_users list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Designation</th>
+                <th>Description</th>
+                <th>Createdat</th>
+                <th>Updatedat</th>
+                <th>Enable</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for role_user in role_users %}
+            <tr>
+                <td><a href="{{ path('role_user_show', { 'id': role_user.id }) }}">{{ role_user.id }}</a></td>
+                <td>{{ role_user.designation }}</td>
+                <td>{{ role_user.description }}</td>
+                <td>{% if role_user.createdAt %}{{ role_user.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if role_user.updatedAt %}{{ role_user.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ role_user.enable }}</td>
+                <td>{{ role_user.type }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('role_user_show', { 'id': role_user.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('role_user_edit', { 'id': role_user.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('role_user_new') }}">Create a new role_user</a>
+        </li>
+    </ul>
+{% endblock %}

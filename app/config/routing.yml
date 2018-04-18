@@ -1,3 +1,11 @@
+app_acces:
+    resource: "@AppBundle/Controller/accesController.php"
+    type:     annotation
+
+app_role.user:
+    resource: "@AppBundle/Controller/role_userController.php"
+    type:     annotation
+
 app_senior:
     resource: "@AppBundle/Controller/SeniorController.php"
     type:     annotation
