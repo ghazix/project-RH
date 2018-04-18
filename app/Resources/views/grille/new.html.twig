@@ -254,6 +254,14 @@
                                         {{ form_label(form.tarifAttest) }}
                                         {{ form_widget(form.tarifAttest, { 'attr': {'class': 'form-control'} }) }}
                                     </div>
+                                    <div class="row">
+                                        {{ form_label(form.bMin) }}
+                                        {{ form_widget(form.bMin, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
+                                    <div class="row">
+                                        {{ form_label(form.bMax) }}
+                                        {{ form_widget(form.bMax, { 'attr': {'class': 'form-control'} }) }}
+                                    </div>
 
                                     <div class="row" style="margin-top: 20px;">
                                         <input type="submit" class="btn btn-success" value="Ajouter" />
@@ -335,3 +343,12 @@
 
 </body>
 </html>
+
+
+{% block javascript %}
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.2/css/bootstrap-slider.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.0.2/bootstrap-slider.min.js"></script>
+    </head>
+
+{% endblock%}
