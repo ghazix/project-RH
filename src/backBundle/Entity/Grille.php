@@ -22,6 +22,21 @@ class Grille
     private $id;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="bMin", type="integer")
+     */
+    private $bMin;
+
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="bMax", type="integer")
+     */
+    private $bMax;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
@@ -79,6 +94,38 @@ class Grille
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBMin()
+    {
+        return $this->bMin;
+    }
+
+    /**
+     * @param int $bMin
+     */
+    public function setBMin($bMin)
+    {
+        $this->bMin = $bMin;
+    }
+
+    /**
+     * @return int
+     */
+    public function getBMax()
+    {
+        return $this->bMax;
+    }
+
+    /**
+     * @param int $bMax
+     */
+    public function setBMax($bMax)
+    {
+        $this->bMax = $bMax;
     }
 
     /**
