@@ -23,6 +23,14 @@ class Client
 
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+
+    /**
      * @ORM\OneToMany(targetEntity="backBundle\Entity\Colls_Clients", mappedBy="clients")
      */
     private $collDossClt;
@@ -327,5 +335,31 @@ class Client
     {
         return $this->etat;
     }
+
+    /**
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * @param string $nom
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+    }
+
+
+
+    public function __toString()
+    {
+        return $this->nom;
+        // TODO: Implement __toString() method.
+    }
+
+
 }
 

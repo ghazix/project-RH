@@ -232,5 +232,45 @@ class role_user
     {
         return $this->type;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAcces()
+    {
+        return $this->acces;
+    }
+
+    /**
+     * @param mixed $acces
+     */
+    public function setAcces($acces)
+    {
+        $this->acces = $acces;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param mixed $user
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return ($this->getDesignation());
+    }
+
+
 }
 

@@ -39,7 +39,7 @@ class accesController extends Controller
      */
     public function newAction(Request $request)
     {
-        $acce = new Acce();
+        $acce = new Acces();
         $form = $this->createForm('AppBundle\Form\accesType', $acce);
         $form->handleRequest($request);
 

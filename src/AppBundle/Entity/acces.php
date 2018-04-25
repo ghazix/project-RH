@@ -223,5 +223,29 @@ class acces
     {
         return $this->enbale;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRoleUser()
+    {
+        return $this->role_user;
+    }
+
+    /**
+     * @param mixed $role_user
+     */
+    public function setRoleUser($role_user)
+    {
+        $this->role_user = $role_user;
+    }
+
+    public function __toString()
+    {
+        // TODO: Implement __toString() method.
+        return ($this->description);
+    }
+
+
 }
 

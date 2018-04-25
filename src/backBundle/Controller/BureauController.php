@@ -26,8 +26,11 @@ class BureauController extends Controller
 
         $bureaus = $em->getRepository('backBundle:Bureau')->findAll();
 
+        $users = $em->getRepository('AppBundle:User')->findByRole('ROLE_ASSISTANT');
+
         return $this->render('bureau/index.html.twig', array(
             'bureaus' => $bureaus,
+            'users' => $users
         ));
     }
 

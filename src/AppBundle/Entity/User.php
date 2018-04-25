@@ -125,7 +125,7 @@ class User extends BaseUser
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Senior", inversedBy="users")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="users")
      * @ORM\JoinColumn(name="senior_id", referencedColumnName="id")
      */
     private $senior;
@@ -376,6 +376,23 @@ class User extends BaseUser
     {
         $this->senior = $senior;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getRoleUser()
+    {
+        return $this->role_user;
+    }
+
+    /**
+     * @param mixed $role_user
+     */
+    public function setRoleUser($role_user)
+    {
+        $this->role_user = $role_user;
+    }
+
 
 
 }

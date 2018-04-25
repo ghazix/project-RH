@@ -30,16 +30,18 @@
                                         <td>{{ user.email }}</td>
                                         <td>{{ user.nom }}</td>
                                         <td>{{ user.prenom }}</td>
-                                        <td> {% for role in user.roles %}
-                                                {{ role}}
-                                            {%endfor  %}</td>
+                                        <td> <!--{% for role in user.roles %}
+                                                {{role}}
+                                            {%endfor%}-->
+                                            {{ user.roleUser }}
+                                        </td>
                                         <td>{% if user.dateEntree %}{{ user.dateEntree|date('Y-d-m ') }}{% endif %}</td>
                                         <td>{% if user.dateSortie %}{{ user.dateSortie|date('Y-d-m ') }}{% endif %}</td>
                                         <td>{{ user.prixH }}</td>
                                         <td>{{ user.soldeO }}</td>
                                         <td>{{ user.moisS }}</td>
                                         <td>{{ user.aquis }}</td>
-                                        <td>{{ user.superieur }}</td>
+                                        <td>{{ user.senior }}</td>
                                         <td>{{ user.etat }}</td>
                                         <td>
 
@@ -130,22 +132,13 @@
                             <div class="form-group" id="senior" hidden>
                                 <label class="col-md-3 control-label">Son senior</label>
                                 <div class="col-md-9">
-                                    <select id="role" class="form-control">
+                                    <select id="senior" class="form-control">
                                         {% for senior in seniors %}
                                             <option value="{{ senior.id }}" name="{{ senior.username }}">{{ senior.nom }}</option>
                                         {% endfor %}
                                     </select>
                                 </div>
                             </div>
-
-
-
-
-
-
-
-
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" data-dismiss="modal" class="btn btn-outline dark">Close</button>
@@ -170,7 +163,7 @@
 
             $("select#role").change(function () {
                 console.log($(this).find('option:selected').attr("name"));
-                if ($(this).find('option:selected').attr("name") == 'assistant') {
+                if ($(this).find('option:selected').attr("name") == '4') {
                     console.log('ok');
                     $("div#senior").show();
                 } else {
@@ -181,6 +174,7 @@
 
 
             });
+
             $("#add_new").click(function () {
                 $("#edit_user").hide();
                 $("#ajout_user").show();
@@ -197,6 +191,50 @@
                 console.log('ok');
 
 
+
+
+
+            });
+            $("button#adduser").click(function(){
+
+
+                $("div#warning-add").hide();
+                var username=$("#username").val();
+                var email=$("#email").val();
+                var password=$("input#password").val();
+                var role = $("select#role").val();
+                var senior  = $('select#senior').val();
+
+             console.log('seniorr',senior);
+
+
+
+
+                $.ajax({
+                    url: '{{ path("user_create") }}',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'username':username,
+                        'email': email,
+                        'password':password,
+                        'role':role,
+                        'senior':senior
+                    },
+                    cache: false,
+                    success: function(response) {
+
+
+                        window.location.reload();
+                    },
+                    error: function(reponse) {
+
+                        console.log('here');
+                        $("div#warning-add").show();
+                        $("div#msg_alert").text(reponse.responseText);
+
+                    }
+                });
 
 
 

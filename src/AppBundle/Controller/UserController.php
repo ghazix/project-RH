@@ -163,8 +163,8 @@ class UserController extends Controller
             ->getForm();
     }
     /**
-     * Creates a new centre national entity.
-     * @Route("/user/create", name="user_create")
+     * Creates a new User entity.
+     * @Route("/create", name="user_create")
      * @Method({"GET", "POST"})
      */
 
@@ -186,23 +186,36 @@ class UserController extends Controller
             $email =         $request->get('email');
             $password=      $request->get('password');
             $role=              $request->get('role');
+            $senior  =      $request->get('senior');
 
-
-
-
+            if ($password != 'mazar123'){
+                $response = json_encode("verifire pwd");
+                return new Response($response, 500);
+            }
+            if ($senior){
+                $seniorr = $em->getRepository('AppBundle:User')->findOneById($senior);
+                        $user->setSenior($seniorr);
+            }
 
 
             $role_id = $em->getRepository('AppBundle:role_user')->findOneById($role);
 
-            if ($role_id->getType() == 2)  {
-                $rolesArr = array('CLIENT');
-                $user->setRoles($rolesArr);
 
-            }
             if ($role_id->getType() == 1)  {
-                $rolesArr = array('COMPAGNIE');
-                $user->setRoles($rolesArr);
+                $rolesArr = array('ROLE_ADMIN');
             }
+            elseif ($role_id->getType() == 2)  {
+                $rolesArr = array('ROLE_SENIOR');
+            }
+            elseif ($role_id->getType() == 3){
+                $rolesArr = array('ROLE_MANAGER');
+            }elseif ($role_id->getType() == 4)
+                $rolesArr = array('ROLE_ASSISTANT');
+            else {
+                $rolesArr = array('ROLE_USER');
+            }
+
+            $user->setRoles($rolesArr);
 
             if (!$username) {
                 $response = json_encode("username required");
@@ -214,6 +227,7 @@ class UserController extends Controller
                 return new Response($response, 500);
 
             }else{
+
 
                 // set center property values
                 $user->setUsername($username);
