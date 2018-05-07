@@ -22,7 +22,6 @@ class Bureau
     private $id;
 
 
-
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="bur")
      */
@@ -97,11 +96,84 @@ class Bureau
     private $tarifSortie;
 
     /**
-     * @var string
+     * @var \DateTime
      *
-     * @ORM\Column(name="attestation", type="decimal", precision=5, scale=2)
+     * @ORM\Column(name="attestation", type="datetime", nullable=true )
      */
     private $attestation;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateEnvoieTheorique", type="datetime", nullable=true )
+     */
+    private $dateEnvoieTheorique;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateEnvoieConvenue", type="datetime", nullable=true )
+     */
+    private $dateEnvoieConvenue;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateEnvoieMazarsFrance", type="datetime", nullable=true )
+     */
+    private $dateEnvoieMazarsFrance;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateEnvoieClient", type="datetime", nullable=true )
+     */
+    private $dateEnvoieClient;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="entrees", type="string", length=255, nullable=true)
+     */
+    private $entrees;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="sorties", type="string", length=255, nullable=true)
+     */
+    private $sorties;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="commentairesPaies", type="string", length=255, nullable=true)
+     */
+    private $commentairesPaies;
+
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateEnvoieBulletins", type="datetime", nullable=true )
+     */
+    private $dateEnvoieBulletins;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="gereePar", type="string", length=255, nullable=true)
+     */
+    private $gereePar;
+
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="etatAvancementPaie", type="string", length=255, nullable=true)
+     */
+    private $etatAvancementPaie;
 
 
     /**
@@ -315,28 +387,37 @@ class Bureau
     }
 
     /**
-     * Set attestation
-     *
-     * @param string $attestation
-     *
-     * @return Bureau
-     */
-    public function setAttestation($attestation)
-    {
-        $this->attestation = $attestation;
-
-        return $this;
-    }
-
-    /**
-     * Get attestation
-     *
-     * @return string
+     * @return \DateTime
      */
     public function getAttestation()
     {
         return $this->attestation;
     }
+
+    /**
+     * @param \DateTime $attestation
+     */
+    public function setAttestation($attestation)
+    {
+        $this->attestation = $attestation;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEtatAvancementPaie()
+    {
+        return $this->etatAvancementPaie;
+    }
+
+    /**
+     * @param string $etatAvancementPaie
+     */
+    public function setEtatAvancementPaie($etatAvancementPaie)
+    {
+        $this->etatAvancementPaie = $etatAvancementPaie;
+    }
+
 
     /**
      * @return mixed
@@ -370,7 +451,149 @@ class Bureau
         $this->bureauB = $bureauB;
     }
 
+    /**
+     * @return \DateTime
+     */
+    public function getDateEnvoieTheorique()
+    {
+        return $this->dateEnvoieTheorique;
+    }
 
+    /**
+     * @param \DateTime $dateEnvoieTheorique
+     */
+    public function setDateEnvoieTheorique($dateEnvoieTheorique)
+    {
+        $this->dateEnvoieTheorique = $dateEnvoieTheorique;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateEnvoieConvenue()
+    {
+        return $this->dateEnvoieConvenue;
+    }
+
+    /**
+     * @param \DateTime $dateEnvoieConvenue
+     */
+    public function setDateEnvoieConvenue($dateEnvoieConvenue)
+    {
+        $this->dateEnvoieConvenue = $dateEnvoieConvenue;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateEnvoieMazarsFrance()
+    {
+        return $this->dateEnvoieMazarsFrance;
+    }
+
+    /**
+     * @param \DateTime $dateEnvoieMazarsFrance
+     */
+    public function setDateEnvoieMazarsFrance($dateEnvoieMazarsFrance)
+    {
+        $this->dateEnvoieMazarsFrance = $dateEnvoieMazarsFrance;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateEnvoieClient()
+    {
+        return $this->dateEnvoieClient;
+    }
+
+    /**
+     * @param \DateTime $dateEnvoieClient
+     */
+    public function setDateEnvoieClient($dateEnvoieClient)
+    {
+        $this->dateEnvoieClient = $dateEnvoieClient;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEntrees()
+    {
+        return $this->entrees;
+    }
+
+    /**
+     * @param string $entrees
+     */
+    public function setEntrees($entrees)
+    {
+        $this->entrees = $entrees;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSorties()
+    {
+        return $this->sorties;
+    }
+
+    /**
+     * @param string $sorties
+     */
+    public function setSorties($sorties)
+    {
+        $this->sorties = $sorties;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCommentairesPaies()
+    {
+        return $this->commentairesPaies;
+    }
+
+    /**
+     * @param string $commentairesPaies
+     */
+    public function setCommentairesPaies($commentairesPaies)
+    {
+        $this->commentairesPaies = $commentairesPaies;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getDateEnvoieBulletins()
+    {
+        return $this->dateEnvoieBulletins;
+    }
+
+    /**
+     * @param \DateTime $dateEnvoieBulletins
+     */
+    public function setDateEnvoieBulletins($dateEnvoieBulletins)
+    {
+        $this->dateEnvoieBulletins = $dateEnvoieBulletins;
+    }
+
+    /**
+     * @return string
+     */
+    public function getGereePar()
+    {
+        return $this->gereePar;
+    }
+
+    /**
+     * @param string $gereePar
+     */
+    public function setGereePar($gereePar)
+    {
+        $this->gereePar = $gereePar;
+    }
 
     public  function __toString()
     {

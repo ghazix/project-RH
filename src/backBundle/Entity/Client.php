@@ -44,7 +44,6 @@ class Client
     private $bureau;
 
 
-
     /**
      * @var string
      *
@@ -111,6 +110,7 @@ class Client
     {
         return $this->id;
     }
+
 
     /**
      * @return mixed
@@ -351,7 +351,6 @@ class Client
     {
         $this->nom = $nom;
     }
-
 
 
     public function __toString()

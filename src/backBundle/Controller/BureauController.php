@@ -35,6 +35,23 @@ class BureauController extends Controller
     }
 
     /**
+     * @Route( options={"expose"=true}, name="optionsUpdate")
+     * @Method("PUT")
+     */
+    public function optionsUpdate(Request $request, Bureau $bureau)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $body=$request->getContent();
+        $data=json_decode($body,true);
+        $entity=$em->getRepository('backBundle:Bureau')->find($data['id']);
+        if (!is_object($entity)){
+            return new \Symfony\Component\BrowserKit\Response('DATA_NOT_FOUND\', 404');
+        }
+        $em->persist($entity);
+        $em->flush();
+    }
+
+    /**
      * Creates a new bureau entity.
      *
      * @Route("/new", name="bureau_new")

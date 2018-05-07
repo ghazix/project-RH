@@ -39,7 +39,14 @@ class DefaultController extends Controller
     public function seniorPageAction()
     {
 
-        return $this->render('senior.html.twig');
+        $em = $this->getDoctrine()->getManager();
+
+        $clients = $em->getRepository('backBundle:Client')->findAll();
+
+        return $this->render('senior.html.twig', array(
+            'clients' => $clients,
+        ));
+
     }
 
     /**
@@ -79,6 +86,24 @@ class DefaultController extends Controller
 
         return $this->render('loginSuccess.html.twig');
     }
+
+
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/feuilleTemps/", name="feuilleTemps")
+     *
+     */
+    public function feuilleTemps()
+    {
+        return $this->render('feuilleTemps.html.twig');
+    }
+
+
+
+
+
 
 
 

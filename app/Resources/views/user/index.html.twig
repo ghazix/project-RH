@@ -155,11 +155,12 @@
 
     </div>
 {% endblock %}
+
 {% block javascripts %}
+
     <script>
 
         $(document).ready(function() {
-
 
             $("select#role").change(function () {
                 console.log($(this).find('option:selected').attr("name"));
@@ -170,9 +171,7 @@
                     console.log('not ok');
                     $("div#senior").hide();
                 }
-
-
-
+                console.log('name');
             });
 
             $("#add_new").click(function () {
@@ -182,21 +181,15 @@
                 $("#adduser").show();
                 $("div#warning-add").hide();
 
-
                 $("input#username").val('');
                 $("input#email").val('');
                 $("input#password").val('');
                 $("select#role").val('');
                 $("select#compagnie").val('');
                 console.log('ok');
-
-
-
-
-
             });
-            $("button#adduser").click(function(){
 
+            $("button#adduser").click(function(){
 
                 $("div#warning-add").hide();
                 var username=$("#username").val();
@@ -205,10 +198,7 @@
                 var role = $("select#role").val();
                 var senior  = $('select#senior').val();
 
-             console.log('seniorr',senior);
-
-
-
+                console.log('seniorr',senior);
 
                 $.ajax({
                     url: '{{ path("user_create") }}',
@@ -224,7 +214,6 @@
                     cache: false,
                     success: function(response) {
 
-
                         window.location.reload();
                     },
                     error: function(reponse) {
@@ -232,15 +221,11 @@
                         console.log('here');
                         $("div#warning-add").show();
                         $("div#msg_alert").text(reponse.responseText);
-
                     }
                 });
 
-
-
             });
         });
-
 
     </script>
 {% endblock %}

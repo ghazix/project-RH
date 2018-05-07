@@ -163,7 +163,7 @@ class UserController extends Controller
             ->getForm();
     }
     /**
-     * Creates a new User entity.
+     * Create a new User entity.
      * @Route("/create", name="user_create")
      * @Method({"GET", "POST"})
      */
@@ -175,31 +175,28 @@ class UserController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
 
-
             $user = new User();
-
 
             $user->setEnabled(1);
             // get posted data
 
-            $username =       $request->get('username');
-            $email =         $request->get('email');
-            $password=      $request->get('password');
-            $role=              $request->get('role');
-            $senior  =      $request->get('senior');
+            $username =$request->get('username');
+            $email =$request->get('email');
+            $password= $request->get('password');
+            $role = $request->get('role');
+            $senior = $request->get('senior');
 
-            if ($password != 'mazar123'){
-                $response = json_encode("verifire pwd");
+            if ($password != 'mazars123'){
+
+                $response = json_encode("verifier votre Mot de passe");
                 return new Response($response, 500);
             }
             if ($senior){
+
                 $seniorr = $em->getRepository('AppBundle:User')->findOneById($senior);
                         $user->setSenior($seniorr);
             }
-
-
             $role_id = $em->getRepository('AppBundle:role_user')->findOneById($role);
-
 
             if ($role_id->getType() == 1)  {
                 $rolesArr = array('ROLE_ADMIN');
@@ -226,18 +223,15 @@ class UserController extends Controller
 
                 return new Response($response, 500);
 
-            }else{
-
+            }else
+                {
 
                 // set center property values
+                $user->setNom($nom);
                 $user->setUsername($username);
                 $user->setEmail($email);
                 $user->setPlainPassword($password);
                 $user->setRoleUser($role_id);
-
-
-
-
                 $em->persist($user);
                 $em->flush($user);
 

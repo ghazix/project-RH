@@ -54,6 +54,10 @@
                         <ul class="nav side-menu">
                             <li><a href="#"><i class="fa fa-bar-chart-o"></i>  suivi Paie-charges <span class="fa fa-chevron-down"></span></a></li>
                         </ul>
+
+                        <ul class="nav side-menu">
+                            <li><a href="#"><i class="fa fa-bar-chart-o"></i>  Mes congés <span class="fa fa-chevron-down"></span></a></li>
+                        </ul>
                     </div>
 
                 </div>
@@ -205,7 +209,6 @@
 
                         <div class="row x_title">
                             <div class="col-md-6">
-                                <h4>Suivi paie et charges</h4>
 
                             </div>
                             <div class="col-md-6">
@@ -217,88 +220,13 @@
 
                         </div>
 
-                        <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
-
-
-                            <div class="col-md-12 col-sm-12 col-xs-6">
-
                                 {% block body %}
 
-                                    Paie
-                                    <div class="row">
+                                    <div id="dp1">
 
-                                <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
-                                    <thead>
-                                    <tr>
-
-                                        <th><input type="checkbox" id="check-all" class="flat"></th>
-                                        <th>Bureau</th>
-                                        <th>Clients</th>
-                                        <th>Nb de paies</th>
-                                        <th>Etat d'avancement paie</th>
-                                        <th>Collaborateur Mazars France</th>
-                                        <th>senior BPO Tunis Paie</th>
-                                        <th>Gestionnaire BPO Tunis Paie</th>
-                                        <th>Date réception théorique</th>
-                                        <th>Date réception effective</th>
-                                        <th>Date d'envoie théorique</th>
-                                        <th>Date d'envoie convenue</th>
-                                        <th>Date d'envoie à  Mazars France</th>
-                                        <th>Date d'envoie client</th>
-                                        <th>Entrées</th>
-                                        <th>Sorties</th>
-                                        <th>Attestataions</th>
-                                        <th>commentaires paies</th>
-                                        <th>Date d'envoie de bulletins</th>
-                                        <th>Géré par </th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    <tr>
-
-                                    </tr>
-
-                                    </thead>
-                                </table>
-                                    charges
-
-                                    <table id="datatable-checkbox" class="table table-striped table-bordered bulk_action">
-                                        <thead>
-                                        <tr style="width: 30px;">
-
-                                            <th><input type="checkbox" id="check-all" class="flat"></th>
-                                            <th>Bureau</th>
-                                            <th>Clients</th>
-                                            <th>nb de paies</th>
-                                            <th>Etat d'avancement paie</th>
-                                            <th>Etat d'avancement charges</th>
-                                            <th>periodicité et écheance Urssaf</th>
-                                            <th> écheance Ducs</th>
-                                            <th>Collaborateur Mazars france </th>
-                                            <th>Gestionnaire BPO Tunis paie</th>
-                                            <th>Senior BPO Tunis paie</th>
-                                            <th>Senior BPO Ducs</th>
-                                            <th>Gestionnaire BPO Ducs</th>
-                                            <th>Géré par </th>
-                                            <th>Commantaires change</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <tr>
-
-                                        </tr>
-
-                                        </thead>
-                                    </table>
                                     </div>
 
                                 {% endblock %}
-                            </div>
-
-                        </div>
 
                         <div class="clearfix"></div>
                     </div>
@@ -361,6 +289,185 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('template/build/js/custom.min.js') }}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{{ asset('bundles/app/daypilot-all.min.js') }}?v=2018.2.3261" type="text/javascript"></script>
+
+<script>
+
+    var dp = new DayPilot.Scheduler("dp1");
+
+    dp.startDate = "2018-01-01";
+    dp.days = 365;
+    dp.scale = "Day";
+    dp.timeHeaders = [
+        { groupBy: "Month", format: "MMM yyyy" },
+        { groupBy: "Cell", format: "d" }
+    ];
+
+    dp.eventHeight = 30;
+
+    dp.contextMenu = new DayPilot.Menu({items: [
+        {text:"Edit", onClick: function(args) { dp.events.edit(args.source); } },
+        {text:"Delete", onClick: function(args) { dp.events.remove(args.source); } },
+        {text:"-"},
+        {text:"Select", onClick: function(args) { dp.multiselect.add(args.source); } },
+    ]});
+
+    dp.treeEnabled = true;
+    dp.treePreventParentUsage = true;
+    dp.resources = [
+        { name: "dossiers", id: "G1", expanded: true, children:[
+
+            {% for d in clients %}
+
+            { name : "{{ d.nom }}", id : "{{d.id}}" },
+
+            {% endfor %}
+]
+        },
+
+    ];
+    console.log('dossiers',dp.resources);
+
+
+    dp.heightSpec = "Max";
+    dp.height = 500;
+
+    dp.events.list = [];
+
+    for (var i = 0; i < 12; i++) {
+
+        var duration = Math.floor(Math.random() * 6) + 1; // 1 to 6
+        var durationDays = Math.floor(Math.random() * 6) + 1; // 1 to 6
+        var start = Math.floor(Math.random() * 6) + 2; // 2 to 7
+
+        var e = {
+            start: new DayPilot.Date("2018-05-05T00:00:00").addDays(start),
+            end: new DayPilot.Date("2018-05-05T12:00:00").addDays(start).addDays(durationDays).addHours(duration),
+            id: DayPilot.guid(),
+            resource: String.fromCharCode(65+i),
+            text: "Event " + (i + 1),
+            bubbleHtml: "Event " + (i + 1),
+            barColor: barColor(i),
+            barBackColor: barBackColor(i)
+        };
+
+        dp.events.list.push(e);
+    }
+
+    dp.eventMovingStartEndEnabled = true;
+    dp.eventResizingStartEndEnabled = true;
+    dp.timeRangeSelectingStartEndEnabled = true;
+
+    // event moving
+    dp.onEventMoved = function (args) {
+        dp.message("Moved: " + args.e.text());
+    };
+
+    dp.onEventMoving = function(args) {
+        if (args.e.resource() === "A" && args.resource === "B") {  // don't allow moving from A to B
+            args.left.enabled = false;
+            args.right.html = "You can't move an event from Room 1 to Room 2";
+
+            args.allowed = false;
+        }
+        else if (args.resource === "B") {  // must start on a working day, maximum length one day
+            while (args.start.getDayOfWeek() == 0 || args.start.getDayOfWeek() == 6) {
+                args.start = args.start.addDays(1);
+            }
+            args.end = args.start.addDays(1);  // fixed duration
+            args.left.enabled = false;
+            args.right.html = "Events in Room 2 must start on a workday and are limited to 1 day.";
+        }
+
+        if (args.resource === "C") {
+            var except = args.e.data;
+            var events = dp.rows.find(args.resource).events.all();
+
+            var start = args.start;
+            var end = args.end;
+            var overlaps = events.some(function(item) {
+                return item.data !== except && DayPilot.Util.overlaps(item.start(), item.end(), start, end);
+            });
+
+            while (overlaps) {
+                start = start.addDays(1);
+                end = end.addDays(1);
+
+                overlaps = events.some(function(item) {
+                    return item.data !== except && DayPilot.Util.overlaps(item.start(), item.end(), start, end);
+                });
+            }
+
+            if (args.start !== start) {
+                args.start = start;
+                args.end = end;
+
+                args.left.enabled = false;
+                args.right.html = "Start automatically moved to " + args.start.toString("d MMMM, yyyy");
+            }
+
+        }
+
+    };
+
+    // event resizing
+    dp.onEventResized = function (args) {
+        dp.message("Resized: " + args.e.text());
+    };
+
+    // event creating
+    dp.onTimeRangeSelected = function (args) {
+        DayPilot.Modal.prompt("New event name:", "New Event").then(function(modal) {
+            dp.clearSelection();
+            var name = modal.result;
+            if (!name) return;
+            var e = new DayPilot.Event({
+                start: args.start,
+                end: args.end,
+                id: DayPilot.guid(),
+                resource: args.resource,
+                text: name
+            });
+            dp.events.add(e);
+            dp.message("Created");
+        });
+    };
+
+
+    dp.onEventMove = function(args) {
+        if (args.ctrl) {
+            var newEvent = new DayPilot.Event({
+                start: args.newStart,
+                end: args.newEnd,
+                text: "Copy of " + args.e.text(),
+                resource: args.newResource,
+                id: DayPilot.guid()  // generate random id
+            });
+            dp.events.add(newEvent);
+
+            // notify the server about the action here
+
+            args.preventDefault(); // prevent the default action - moving event to the new location
+        }
+    };
+
+    dp.init();
+
+    dp.scrollTo("2018-05-01");
+
+
+    function barColor(i) {
+        var colors = ["#3c78d8", "#6aa84f", "#f1c232", "#cc0000"];
+        return colors[i % 4];
+    }
+    function barBackColor(i) {
+        var colors = ["#a4c2f4", "#b6d7a8", "#ffe599", "#ea9999"];
+        return colors[i % 4];
+    }
+
+</script>
 
 </body>
 </html>

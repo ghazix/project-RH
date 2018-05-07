@@ -1,99 +1,242 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
+    <script src="{{ asset('angular/lib/angular.min.js') }}"></script>
+    <script src="{{ asset('angular/lib/angular-sanitize.min.js') }}"></script>
 
+    <script>
 
-                                    <table class="table table-striped jambo_table bulk_action">
-                                        <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Bureau</th>
-                                            <th>Clients</th>
-                                            <th>Nb de paie</th>
-                                            <th>Etat d'avancement paie</th>
-                                            <th>Collaborateur Mazars France</th>
-                                            <th>Senior BPO Tunis Paie</th>
-                                            <th>Gestionnaire BPO Tunis Paie</th>
-                                            <th>Date reception theorique</th>
-                                            <th>Date reception effective</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% set i = 0 %}
-                                        {% for bureau in bureaus %}
-                                        {% if bureau.client|length != 0 %}
-                                            {% for client in bureau.client %}
+        var myAppModule = angular.module("myApp", ['ngSanitize']);
+        myAppModule.config(function ($interpolateProvider) {
+            $interpolateProvider.startSymbol('#').endSymbol('#');
+        });
 
+        myAppModule.controller("myCtrl", ["$scope", function ($scope) {
+            $scope.test = "angular prét !!";
+        }]);
 
-                                            <tr>
-                                                <td><a href="{{ path('bureau_show', { 'id': bureau.id }) }}">{{ bureau.id }}</a></td>
-                                                <td>{{ bureau.nom }}</td>
+    </script>
+    <div ng-app="myApp" ng-controller="myCtrl">
+        #test#
 
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Bureau</th>
+                <th>Clients</th>
+                <th>Nb de paie</th>
+                <th>Etat d'avancement paie</th>
+                <th>Collaborateur Mazars France</th>
+                <th>Senior BPO Tunis Paie</th>
+                <th>Gestionnaire BPO Tunis Paie</th>
+                <th>Date reception theorique</th>
+                <th>Date reception effective</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
 
+            {% set i = 0 %}
+            {% for bureau in bureaus %}
+                {% if bureau.client|length != 0 %}
+                    {% for client in bureau.client %}
+                        <tr>
+                            <td><a href="{{ path('bureau_show', { 'id': bureau.id }) }}">{{ bureau.id }}</a></td>
+                            <td>{{ bureau.nom }}</td>
+                            <td>{{ client }}</td>
+                            <td>{{ bureau.adresse }}</td>
+                            <td> {{ loop.index }}
+                                <select ng-model="choix {{ loop.index }}" ng-change="functionOpt(choix)" ng-controller="myCtrl">
+                                    <option>en cours de controle</option>
+                                    <option>en cours de traitement</option>
+                                    <option style="color: #00A000;">envoyé</option>
+                                    <option>mazars france</option>
+                                    <option>non traité</option>
+                                    <option style="color: #880000;">fin de mission</option>
+                                    <option>reçu</option>
+                                    <option>non parvenu</option>
+                                </select>
+                            </td>
 
-                                                <td>{{ client }}</td>
+                            <td>{{ bureau.tarifPaie }}</td>
+                            <td>{{ app.user.nom }}</td>
+                            <td>
+                                <select class="form-control">
 
+                                    {% for assistant in users %}
+                                        <option>{{ assistant.username }}</option>
+                                    {% endfor %}
 
+                                </select>
+                            </td>
+                            <td>{{ bureau.tarifSortie }}</td>
 
-                                                <td>{{ bureau.adresse }}</td>
-                                                <td>{{ bureau.telephone }}</td>
-                                                <td>{{ bureau.tarifPaie }}</td>
-                                                <td>{{ app.user.nom }}</td>
-                                                <td>
-                                                    <select class="form-control">
-                                                        {% for assistant in users %}
-                                                        <option>{{ assistant.username }}</option>
-                                                         {% endfor %}
-                                                    </select>
-                                                </td>
-                                                <td>{{ bureau.tarifSortie }}</td>
-                                                <td>{{ bureau.attestation }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-default">
-                                                        <a href="{{ path('bureau_show', { 'id': bureau.id }) }}">consulter</a>
-                                                    </button>
-                                                    <button type="button" class="btn btn-default">
-                                                        <a href="{{ path('bureau_edit', { 'id': bureau.id }) }}">modifier</a>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            {% endfor %}
-                                        {% else %}
-                                            <tr>
-                                                <td><a href="{{ path('bureau_show', { 'id': bureau.id }) }}">{{ bureau.id }}</a></td>
-                                                <td>{{ bureau.nom }}</td>
+                            <td>
+                                <button type="button" class="btn btn-default">
+                                    <a href="{{ path('bureau_show', { 'id': bureau.id }) }}">consulter</a>
+                                </button>
+                                <button type="button" class="btn btn-default">
+                                    <a href="{{ path('bureau_edit', { 'id': bureau.id }) }}">modifier</a>
+                                </button>
+                            </td>
+                        </tr>
 
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td><a href="{{ path('bureau_show', { 'id': bureau.id }) }}">{{ bureau.id }}</a></td>
+                        <td>{{ bureau.nom }}</td>
+                        <td>{{ bureau.adresse }}</td>
+                        <td>{{ bureau.telephone }}</td>
+                        <td>{{ bureau.tarifPaie }}</td>
+                        <td>{{ bureau.tarifDucs }}</td>
+                        <td>{{ bureau.tarifEntree }}</td>
+                        <td>{{ bureau.tarifSortie }}</td>
 
+                        <td>
+                            <button type="button" class="btn btn-default">
+                                <a href="{{ path('bureau_show', { 'id': bureau.id }) }}">consulter</a>
+                            </button>
+                            <button type="button" class="btn btn-default">
+                                <a href="{{ path('bureau_edit', { 'id': bureau.id }) }}">modifier</a>
+                            </button>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
 
-                                                <td><input type="text" class="form-control                                                                                                                                                                                                                                                                                                                                                                                                                                                        "> </td>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Bureau</th>
+                <th>Clients</th>
+                <th>Nb de paie</th>
+                <th>Etat d'avancement charges</th>
+                <th>Collaborateur Mazars France</th>
+                <th>Senior BPO Tunis Paie</th>
+                <th>Gestionnaire BPO Tunis Paie</th>
+                <th>Date reception theorique</th>
+                <th>Date reception effective</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% set i = 0 %}
+            {% for bureau in bureaus %}
+                {% if bureau.client|length != 0 %}
+                    {% for client in bureau.client %}
+                        <tr>
+                            <td><a href="{{ path('bureau_show', { 'id': bureau.id }) }}">{{ bureau.id }}</a></td>
+                            <td>{{ bureau.nom }}</td>
+                            <td>{{ client }}</td>
+                            <td>{{ bureau.adresse }}</td>
+                            <td><select>
+                                    <option>en cours de controle</option>
+                                    <option>en cours de traitement</option>
+                                    <option>envoyé</option>
+                                    <option>mazars france</option>
+                                    <option>non traité</option>
+                                    <option>fin de mission</option>
+                                </select></td>
+                            <td>{{ bureau.tarifPaie }}</td>
+                            <td>{{ app.user.nom }}</td>
+                            <td>
+                                <select class="form-control">
 
+                                    {% for assistant in users %}
+                                        <option>{{ assistant.username }}</option>
+                                    {% endfor %}
 
+                                </select>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td><a href="{{ path('bureau_show', { 'id': bureau.id }) }}">{{ bureau.id }}</a></td>
+                        <td>{{ bureau.nom }}</td>
+                        "> </td>
+                        <td>{{ bureau.adresse }}</td>
+                        <td>{{ bureau.telephone }}</td>
+                        <td>{{ bureau.tarifPaie }}</td>
+                        <td>{{ bureau.tarifDucs }}</td>
+                        <td>{{ bureau.tarifEntree }}</td>
+                        <td>{{ bureau.tarifSortie }}</td>
 
-                                                <td>{{ bureau.adresse }}</td>
-                                                <td>{{ bureau.telephone }}</td>
-                                                <td>{{ bureau.tarifPaie }}</td>
-                                                <td>{{ bureau.tarifDucs }}</td>
-                                                <td>{{ bureau.tarifEntree }}</td>
-                                                <td>{{ bureau.tarifSortie }}</td>
-                                                <td>{{ bureau.attestation }}</td>
-                                                <td>
-                                                    <button type="button" class="btn btn-default">
-                                                        <a href="{{ path('bureau_show', { 'id': bureau.id }) }}">consulter</a>
-                                                    </button>
-                                                    <button type="button" class="btn btn-default">
-                                                        <a href="{{ path('bureau_edit', { 'id': bureau.id }) }}">modifier</a>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        {% endif %}
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
 
-                                    <button type="button" class="btn btn-dark">
-                                        <a href="{{ path('bureau_new') }}">Creer </a>
-                                    </button>
+        <table class="table table-striped jambo_table bulk_action">
+            <thead>
+            <tr>
+                <th>client</th>
+                <th>en cours de controle</th>
+                <th>en cours de traitement</th>
+                <th>envoyé</th>
+                <th>reçu</th>
+                <th>non parvenu</th>
+                <th>Collaborateur Mazars France</th>
+            </tr>
+
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-dark">
+            <a href="{{ path('bureau_new') }}">Creer </a>
+        </button>
+    </div>
+
 {% endblock %}
+
+
 {% block javascripts %}
-                                {% endblock %}
+
+    <script>
+
+
+
+        $(document).ready(function() {
+            $("body > div.container.body > div > div.right_col > div:nth-child(2) > div > div > div.col-md-3.col-sm-3.col-xs-12.bg-white > div > div > table:nth-child(1) > tbody > tr:nth-child(1) > td:nth-child(5) > select").change(function(){
+                alert("The text has been changed.");
+
+                $( "body > div.container.body > div > div.right_col > div:nth-child(2) > div > div > div.col-md-3.col-sm-3.col-xs-12.bg-white > div > div > table:nth-child(1) > tbody > tr:nth-child(1) > td:nth-child(5) > select" option:selected" ).text();
+
+            });
+
+        });
+
+        myApp.controller('myCtrl', ["$scope", function ($scope) {
+
+            $scope.$watch('result', function(value) {
+                $scope.output = $scope.cities(value);
+            });
+
+            $scope.functionOpt = function (id) {
+
+                console.log("id",$scope.edit);
+                var edit = $resource(Routing.generate("optionsUpdate"),{id: id}),null
+                    {
+                        optionsEtat
+                        'update': {method: 'PUT'}
+                    }
+                    edit.update(null, $scope.edit,
+                        function (data) {
+                        },
+                        function (error) {
+                        alert('erreur');
+                        });
+                }
+            }]);
+
+    </script>
+
+
+{% endblock %}

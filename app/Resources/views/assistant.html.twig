@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -53,15 +54,13 @@
                         <h3>General</h3>
                         <ul class="nav side-menu">
                             <li><a href="{{path('bureau_index')}}"><i class="fa fa-home"></i> Bureaux </a></li>
-                            <li><a href="{{ path('seniorManager_dept_index') }}"><i class="fa fa-edit"></i> Departements </a></li>
-                            <li><a href="{{path('seniorManager_user_index') }}" ><i class="fa fa-desktop"></i>Collaborateurs</a></li>
-                            <li><a href="{{ path('seniorManager_grille_index') }}"><i class="fa fa-edit"></i> Grilles </a></li>
-                            <li><a href="{{ path('seniorManager_client_index') }}"><i class="fa fa-bar-chart-o"></i> Dossiers <span class="fa fa-chevron-down"></span></a></li>
+                            <li><a href="#"><i class="fa fa-bar-chart-o"></i> Mes Dossiers <span class="fa fa-chevron-down"></span></a></li>
+                            <li><a href="#"><i class="fa fa-bar-chart-o"></i> Mes Congés <span class="fa fa-chevron-down"></span></a></li>
+
                             <li><a href="#"><i class="fa fa-bar-chart-o"></i>  suivi Paie-charges <span class="fa fa-chevron-down"></span></a></li>
-                            <li><a href="{{ path('pageCalendrier') }}"><i class="fa fa-table"></i> Calendrier <span class="fa fa-chevron-down"></span></a></li>
+                            <li><a href="{{ path('feuilleTemps') }}"><i class="fa fa-table"></i> Feuille de temps <span class="fa fa-chevron-down"></span></a></li>
                         </ul>
                     </div>
-
                 </div>
                 <!-- /sidebar menu -->
 
@@ -201,7 +200,6 @@
                     <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
                 </div>
 
-
             </div>
             <!-- /top tiles -->
 
@@ -229,7 +227,10 @@
                                 {% block body %}
 
 
+
+
                                 {% endblock %}
+
                             </div>
 
                         </div>
@@ -298,3 +299,24 @@
 
 </body>
 </html>
+
+{%  block javascript %}
+    <!-- jQuery -->
+    <script src="{{ asset('template/vendors/jquery/dist/jquery.min.js') }}"></script>
+    <!-- Bootstrap -->
+    <script src="{{ asset('template/vendors/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+    <!-- FastClick -->
+    <script src="{{ asset('template/vendors/fastclick/lib/fastclick.js') }}"></script>
+    <!-- NProgress -->
+    <script src="{{ asset('template/vendors/nprogress/nprogress.js') }}"></script>
+    <!-- FullCalendar -->
+    <script src="{{ asset('template/vendors/moment/min/moment.min.js') }}"></script>
+    <script src="{{ asset('template/vendors/fullcalendar/dist/fullcalendar.min.js') }}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('template/build/js/custom.min.js') }}"></script>
+
+{% endblock %}
+
+
+
+

@@ -64,7 +64,6 @@
 		if ( $P._toString === undefined ){
 			$P._toString = $P.toString;
 		}
-
 	};
 	$D.initOverloads();
 
